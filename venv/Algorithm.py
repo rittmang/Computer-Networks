@@ -1,6 +1,14 @@
 class Algorithm(object):
     HAS_CYCLE = False
 
+    def shareRT(self, vertexList):
+        for receiver in vertexList:
+            for sender in vertexList:
+                if sender.name != receiver.name:
+                    print("Ensure router does not send itself, its routing table")
+
+
+
     def calculateShortestPath(self, vertexList, edgeList, startVertex):
         startVertex.minDistance = 0
 
