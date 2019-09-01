@@ -1,12 +1,10 @@
 import numpy as np
 from Algorithm import *
 from Node import *
-from Edge import *
 def myFunc(e):
     return e
 
 vertexList = []
-edgeList = []
 print("Enter number of routers:")
 n = int(input())
 for i in range(n):
