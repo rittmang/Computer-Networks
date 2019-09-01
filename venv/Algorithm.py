@@ -1,6 +1,9 @@
 class Algorithm(object):
     HAS_CYCLE = False
 
+    def myFunc(e):
+        return e
+
     @staticmethod
     def shareRT(vertexList):
 
@@ -38,7 +41,7 @@ class Algorithm(object):
 
                 print("-----------------UPDATION------------------------")
                 print(receiver.name, "'s Routing Table:")
-                i.routingTable.sort(key=myFunc)
+                receiver.routingTable.sort()
                 for j in receiver.routingTable:
                     print(j, "\t", end='')
                 print()

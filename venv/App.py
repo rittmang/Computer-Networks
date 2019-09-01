@@ -39,14 +39,18 @@ for i in range(m):
         if i.name == destLabel.name:
             destLabel = i
 
+    for lol in sourceLabel.routingTable:
+        if lol[0] == destLabel.name:
+            earlier_cost = lol[1]
+
     if destLabel not in sourceLabel.neighbours:
         sourceLabel.neighbours.append(destLabel)
     if sourceLabel not in destLabel.neighbours:
         destLabel.neighbours.append(sourceLabel)
 
-    sourceLabel.routingTable.remove((destLabel.name, 99, destLabel.name))
+    sourceLabel.routingTable.remove((destLabel.name, earlier_cost, destLabel.name))
     sourceLabel.routingTable.append((destLabel.name, cost, destLabel.name))
-    destLabel.routingTable.remove((sourceLabel.name, 99, sourceLabel.name))
+    destLabel.routingTable.remove((sourceLabel.name, earlier_cost, sourceLabel.name))
     destLabel.routingTable.append((sourceLabel.name, cost, sourceLabel.name))
 
 
@@ -62,4 +66,31 @@ for i in vertexList:
 algorithm = Algorithm()
 algorithm.shareRT(vertexList)
 
+while True:
+    print("Update cost of some link? Y:N")
+    opt = input()
+    if opt == 'Y':
+        print("Source Name, Destination Name, Cost:")
+        sourceLabel = Node(input(), 0)
+        destLabel = Node(input(), 0)  # don't make another routing table, since will be replaced
+        cost = int(input())
+        earlier_cost = 0
+        for i in vertexList:
+            if i.name == sourceLabel.name:
+                sourceLabel = i
+            if i.name == destLabel.name:
+                destLabel = i
+
+        for lol in sourceLabel.routingTable:
+            if lol[0] == destLabel.name:
+                earlier_cost = lol[1]
+
+        print("Earlier cost from ",sourceLabel.name," to ",destLabel.name," was ",earlier_cost)
+        sourceLabel.routingTable.remove((destLabel.name, earlier_cost, destLabel.name))
+        sourceLabel.routingTable.append((destLabel.name, cost, destLabel.name))
+        destLabel.routingTable.remove((sourceLabel.name, earlier_cost, sourceLabel.name))
+        destLabel.routingTable.append((sourceLabel.name, cost, sourceLabel.name))
+        algorithm.shareRT(vertexList)
+    else:
+        break
 
