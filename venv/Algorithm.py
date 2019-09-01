@@ -37,13 +37,13 @@ class Algorithm(object):
                             else:
                                 continue
                         #i = tuple(L1)
-
-                print("-----------------UPDATION------------------------")
-                print(receiver.name, "'s Routing Table:")
-                receiver.routingTable.sort()
-                for j in receiver.routingTable:
-                    print(j, "\t", end='')
-                print()
+                if UPDATE_HAPPENED == True:
+                    print("-----------------UPDATION------------------------")
+                    print(receiver.name, "'s Routing Table:")
+                    receiver.routingTable.sort()
+                    for j in receiver.routingTable:
+                        print(j, "\t", end='')
+                    print()
 
             if(UPDATE_HAPPENED == False):
                 break
