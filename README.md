@@ -6,9 +6,9 @@ This application seeks to mimic the Distance Vector Routing (no concurrency invo
 
 
 
-Navigate to /venv
+Navigate to venv
 
-> $ cd /venv
+> $ cd venv
 
 
 
