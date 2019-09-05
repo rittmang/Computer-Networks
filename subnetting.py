@@ -14,17 +14,10 @@ def and1(ip_addr_bin_1,subnet_mask_bin_1):
     return str1
 def add_binary_nums(x, y): 
         max_len = max(len(x), len(y)) 
-  
         x = x.zfill(max_len) 
         y = y.zfill(max_len) 
-          
-        # initialize the result 
         result = '' 
-          
-        # initialize the carry 
-        carry = 0
-  
-        # Traverse the string 
+        carry = 0 
         for i in range(max_len - 1, -1, -1): 
             r = carry 
             r += 1 if x[i] == '1' else 0
