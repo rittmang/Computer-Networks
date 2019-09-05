@@ -5,6 +5,36 @@ def string_to_ip(ip_addr_bin_1):
     #print(ip_addr_bin[0:8:1], ip_addr_bin[8:16:1], ip_addr_bin[16:24:1], ip_addr_bin[24:32:1])
     ip = str(int(ip_addr_bin_1[0:8:1],2))+"."+str(int(ip_addr_bin_1[8:16:1],2))+"."+str(int(ip_addr_bin_1[16:24:1],2))+"."+str(int(ip_addr_bin_1[24:32:1],2))
     return ip
+def and1(ip_addr_bin_1,subnet_mask_bin_1):
+    listi = list(ip_addr_bin_1)
+    for i in range(0,len(ip_addr_bin_1)):
+        listi[i] = str(int(listi[i]) & int(subnet_mask_bin_1[i]))
+        #listi[i] = str(int(ip_addr_bin_1) & int(subnet_mask_bin_1[i]))
+    str1 = ''.join(listi)
+    return str1
+def add_binary_nums(x, y): 
+        max_len = max(len(x), len(y)) 
+  
+        x = x.zfill(max_len) 
+        y = y.zfill(max_len) 
+          
+        # initialize the result 
+        result = '' 
+          
+        # initialize the carry 
+        carry = 0
+  
+        # Traverse the string 
+        for i in range(max_len - 1, -1, -1): 
+            r = carry 
+            r += 1 if x[i] == '1' else 0
+            r += 1 if y[i] == '1' else 0
+            result = ('1' if r % 2 == 1 else '0') + result 
+            carry = 0 if r < 2 else 1     # Compute the carry. 
+          
+        if carry !=0 : result = '1' + result 
+  
+        return result.zfill(max_len)
 
 prefix_length=0
 ip_addr_bin = ""
@@ -51,7 +81,8 @@ print("Thus, needed addresses = ",number_of_addresses," with ",addresses_per_blo
 
 n_sub = 32 - int(math.log2(addresses_per_block))
 number_of_positions_cleared = int(math.log2(addresses_per_block))
-start_ip = ip_addr_bin[0:(32 - number_of_positions_cleared + 1):1].ljust(32, '0')
+#start_ip = ip_addr_bin[0:(32 - number_of_positions_cleared + 1):1].ljust(32, '0')
+start_ip = and1(ip_addr_bin,subnet_mask_bin).ljust(32,'0')
 
 for i in range(1,number_of_subnets+1):
     print("**********************")
@@ -59,9 +90,9 @@ for i in range(1,number_of_subnets+1):
     print("Starting IP = ", start_ip, " ", string_to_ip(start_ip))
     print(addresses_per_block)
     last_ip = bin(int(start_ip,2)+int("{0:b}".format(addresses_per_block-1),2))
-    last_ip = last_ip[2:]
+    last_ip = last_ip[2:].rjust(32,'0')
     print("Last IP = ", last_ip, " ", string_to_ip(last_ip))
-    start_ip = bin(int(start_ip,2)+int("{0:b}".format(addresses_per_block),2))
-    start_ip = start_ip[2:]
+    start_ip = add_binary_nums(last_ip,"1")
+    #start_ip = start_ip[2:]
 
 
