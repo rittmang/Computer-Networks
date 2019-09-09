@@ -1,2 +1,6 @@
 .idea/
 venv/
+*
+!*.py
+!*.c
+!.md
