@@ -1,8 +1,6 @@
 import numpy as np
 from Algorithm import *
 from Node import *
-def myFunc(e):
-    return e
 
 vertexList = []
 print("Enter number of routers:")
@@ -55,7 +53,7 @@ for i in range(m):
 print("-----------------INITIALIZATION------------------------")
 for i in vertexList:
     print(i.name,"'s Routing Table:")
-    i.routingTable.sort(key=myFunc)
+    i.routingTable.sort()
     for j in i.routingTable:
           print(j,"\t",end='')
     print()
