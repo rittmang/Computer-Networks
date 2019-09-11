@@ -1,14 +1,10 @@
 class Algorithm(object):
-
-    def myFunc(e):
-        return e
-
+    
     @staticmethod
     def shareRT(vertexList):
 
         print("---------------------\n\nRouting Tables being transmitted 1 by 1:")
-        #UPDATE_HAPPENED = False
-
+        
         while True:
             UPDATE_HAPPENED = False
             for receiver in vertexList:
@@ -38,7 +34,7 @@ class Algorithm(object):
                                 UPDATE_HAPPENED = True
                             else:
                                 continue
-                        #i = tuple(L1)
+                        
                 if UPDATE_HAPPENED == True:
                     print("\n\nUPDATED ",end='')
                     print(receiver.name, "'s Routing Table:")
