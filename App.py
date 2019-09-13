@@ -70,7 +70,8 @@ while True:
         sourceLabel = Node(input(), 0)
         destLabel = Node(input(), 0)  # don't make another routing table, since will be replaced
         cost = int(input())
-        earlier_cost = 0
+        earlier_cost_1, earlier_cost_2 = 0, 0
+        current_next_hop_1, current_next_hop_2='',''
         for i in vertexList:
             if i.name == sourceLabel.name:
                 sourceLabel = i
@@ -79,12 +80,20 @@ while True:
 
         for lol in sourceLabel.routingTable:
             if lol[0] == destLabel.name:
-                earlier_cost = lol[1]
+                earlier_cost_1 = lol[1]
+                current_next_hop_1=lol[2]
+        for lol in destLabel.routingTable:
+            if lol[0] == sourceLabel.name:
+                earlier_cost_2 = lol[1]
+                current_next_hop_2=lol[2]
 
-        print("Earlier cost from ",sourceLabel.name," to ",destLabel.name," was ",earlier_cost)
-        sourceLabel.routingTable.remove((destLabel.name, earlier_cost, destLabel.name))
+        print("Earlier cost from ",sourceLabel.name," to ",destLabel.name," was ",earlier_cost_1)
+        print("Earlier cost from ",destLabel.name," to ",sourceLabel.name," was ",earlier_cost_2)
+        #sourceLabel.routingTable.remove((destLabel.name, earlier_cost, destLabel.name))
+        sourceLabel.routingTable.remove((destLabel.name, earlier_cost_1, current_next_hop_1))
         sourceLabel.routingTable.append((destLabel.name, cost, destLabel.name))
-        destLabel.routingTable.remove((sourceLabel.name, earlier_cost, sourceLabel.name))
+        #destLabel.routingTable.remove((sourceLabel.name, earlier_cost, sourceLabel.name))
+        destLabel.routingTable.remove((sourceLabel.name, earlier_cost_2, current_next_hop_2))
         destLabel.routingTable.append((sourceLabel.name, cost, sourceLabel.name))
         algorithm.shareRT(vertexList)
     else:
