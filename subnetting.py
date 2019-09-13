@@ -1,17 +1,18 @@
 import math
 def next_power_of_2(x):
     return 1 if x == 0 else 2**(x - 1).bit_length()
+
 def string_to_ip(ip_addr_bin_1):
-    #print(ip_addr_bin[0:8:1], ip_addr_bin[8:16:1], ip_addr_bin[16:24:1], ip_addr_bin[24:32:1])
     ip = str(int(ip_addr_bin_1[0:8:1],2))+"."+str(int(ip_addr_bin_1[8:16:1],2))+"."+str(int(ip_addr_bin_1[16:24:1],2))+"."+str(int(ip_addr_bin_1[24:32:1],2))
     return ip
+
 def and1(ip_addr_bin_1,subnet_mask_bin_1):
     listi = list(ip_addr_bin_1)
     for i in range(0,len(ip_addr_bin_1)):
         listi[i] = str(int(listi[i]) & int(subnet_mask_bin_1[i]))
-        #listi[i] = str(int(ip_addr_bin_1) & int(subnet_mask_bin_1[i]))
     str1 = ''.join(listi)
     return str1
+
 def add_binary_nums(x, y): 
         max_len = max(len(x), len(y)) 
         x = x.zfill(max_len) 
@@ -28,6 +29,9 @@ def add_binary_nums(x, y):
         if carry !=0 : result = '1' + result 
   
         return result.zfill(max_len)
+
+
+
 
 prefix_length=0
 ip_addr_bin = ""
@@ -57,24 +61,29 @@ while True:
     else:
         print("Enter a valid IPv4 address")
         continue
-print("Your default prefix length is ",prefix_length)
-print("Change? Y:N")
-opt = input()
-if opt == 'Y':
-    prefix_length = int(input("Enter prefix length:"))
+#print("Your default prefix length is ",prefix_length)
+#print("Change? Y:N")
+#opt = input()
+#if opt == 'Y':
+ #   prefix_length = int(input("Enter prefix length:"))
 
+number_of_subnets = next_power_of_2(int(input("Enter number of subnets:")))
+add_bits = int(math.log2(number_of_subnets))
+prefix_length += add_bits
 subnet_mask_bin = "1"*prefix_length+"0"*(32-prefix_length)
-#subnet_mask_bin.ljust(32,'0')
+
+prefix_length-=add_bits
 print("Subnet Mask = ",subnet_mask_bin," ",string_to_ip(subnet_mask_bin))
 
 number_of_addresses = 2**(32-prefix_length)
-number_of_subnets = next_power_of_2(int(input("Enter number of subnets:")))
+
 addresses_per_block = int(number_of_addresses / number_of_subnets)
-print("Thus, needed addresses = ",number_of_addresses," with ",addresses_per_block," addresses per block")
+print("Thus, addresses per subnet = ",addresses_per_block)
+#To check total addresses in network: print(number_of_addresses)
 
 n_sub = 32 - int(math.log2(addresses_per_block))
 number_of_positions_cleared = int(math.log2(addresses_per_block))
-#start_ip = ip_addr_bin[0:(32 - number_of_positions_cleared + 1):1].ljust(32, '0')
+
 start_ip = and1(ip_addr_bin,subnet_mask_bin).ljust(32,'0')
 
 for i in range(1,number_of_subnets+1):
@@ -86,6 +95,6 @@ for i in range(1,number_of_subnets+1):
     last_ip = last_ip[2:].rjust(32,'0')
     print("Last IP = ", last_ip, " ", string_to_ip(last_ip))
     start_ip = add_binary_nums(last_ip,"1")
-    #start_ip = start_ip[2:]
+    
 
 
