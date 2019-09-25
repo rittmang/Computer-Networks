@@ -24,10 +24,7 @@ void func(int sockfd)
         n = 0;  
         while ((buff[n++] = getchar()) != '\n') 
             ; 
-   
         write(sockfd, buff, sizeof(buff)); 
-  
-         
         if (strncmp("exit", buff, 4) == 0) { 
             printf("Server Exit...\n"); 
             break; 
@@ -41,7 +38,6 @@ int main()
     int sockfd, connfd, len; 
     struct sockaddr_in servaddr, cli; 
   
-    
     sockfd = socket(AF_INET, SOCK_STREAM, 0); 
     if (sockfd == -1) { 
         printf("socket creation failed...\n"); 
@@ -50,7 +46,6 @@ int main()
     else
         printf("Socket successfully created..\n"); 
     bzero(&servaddr, sizeof(servaddr)); 
-  
     
     servaddr.sin_family = AF_INET; 
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
@@ -79,10 +74,6 @@ int main()
     } 
     else
         printf("server acccept the client...\n"); 
-  
-  
     func(connfd); 
-  
-
     close(sockfd); 
 } 
